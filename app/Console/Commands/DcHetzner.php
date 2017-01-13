@@ -13,7 +13,8 @@ class DcHetzner extends Command
      * @var string
      */
     protected $signature = 'dc:hetzner {method} {username} {password} {metrics}
-    {--S|server_name=}';
+    {--S|server_name=}
+    {--T|timestamp}';
 
     /**
      * The console command description.
@@ -41,10 +42,16 @@ class DcHetzner extends Command
     {
         $DcHetzher = new DcHetznerObj($this->argument('username'), $this->argument('password'));
 
-        echo call_user_func(
+        $result = call_user_func(
             array($DcHetzher, $this->argument('method')),
             $this->options())
         [$this->argument('method')][$this->argument('metrics')];
 
+        if (!empty($this->option('timestamp')))
+        {
+            $result = date(strtotime($result));
+        }
+
+        echo $result;
     }
 }
