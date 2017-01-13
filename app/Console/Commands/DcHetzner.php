@@ -14,7 +14,7 @@ class DcHetzner extends Command
      */
     protected $signature = 'dc:hetzner {method} {username} {password} {metrics}
     {--S|server_name=}
-    {--T|timestamp}';
+    {--D|date_format}';
 
     /**
      * The console command description.
@@ -47,9 +47,9 @@ class DcHetzner extends Command
             $this->options())
         [$this->argument('method')][$this->argument('metrics')];
 
-        if (!empty($this->option('timestamp')))
+        if (!empty($this->option('date_format')))
         {
-            $result = date(strtotime($result));
+            $result = date('Ymd',strtotime($result));
         }
 
         echo $result;
