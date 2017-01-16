@@ -12,7 +12,7 @@ class DcHetzner extends Command
      *
      * @var string
      */
-    protected $signature = 'dc:hetzner {method} {username} {password} {metrics}
+    protected $signature = 'dc:hetzner {method} {username} {password} {metrics?}
     {--S|server_name=}
     {--D|date_format}';
 
@@ -44,8 +44,14 @@ class DcHetzner extends Command
 
         $result = call_user_func(
             array($DcHetzher, $this->argument('method')),
-            $this->options())
-        [$this->argument('method')][$this->argument('metrics')];
+            $this->options());
+
+        if (empty($this->argument('metrics'))){
+            print_r($result);
+            return true;
+        }
+
+        $result = $result[$this->argument('method')][$this->argument('metrics')];
 
         if ($this->argument('method') == 'server' && $this->argument('metrics') == 'status') {
             ($result == 'ready') ? $result = 1 : $result = 0;
@@ -57,5 +63,7 @@ class DcHetzner extends Command
         }
 
         echo $result;
+
+        return true;
     }
 }
