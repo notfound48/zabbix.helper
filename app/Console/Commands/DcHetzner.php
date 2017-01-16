@@ -47,6 +47,10 @@ class DcHetzner extends Command
             $this->options())
         [$this->argument('method')][$this->argument('metrics')];
 
+        if ($this->argument('method') == 'server' && $this->argument('metrics') == 'status') {
+            ($result == 'ready') ? $result = 1 : $result = 0;
+        }
+
         if (!empty($this->option('date_format')))
         {
             $result = date('Ymd',strtotime($result));
