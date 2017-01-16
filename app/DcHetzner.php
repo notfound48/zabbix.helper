@@ -22,7 +22,7 @@ class DcHetzner extends Model
 
     public function server($parameters){
         return json_decode(Curl::to($this->url . __FUNCTION__ . '/' . $parameters['server_name'])
-            ->withOption('USERPWD', $this->username . ":" . $this->password)
+            ->withOption('USERPWD', decrypt($this->username) . ":" . decrypt($this->password))
             ->get(), true);
     }
 }
