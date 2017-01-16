@@ -40,7 +40,7 @@ class DcHetzner extends Command
      */
     public function handle()
     {
-        $DcHetzher = new DcHetznerObj($this->argument('username'), $this->argument('password'));
+        $DcHetzher = new DcHetznerObj(decrypt($this->argument('username')), decrypt($this->argument('password')));
 
         $result = call_user_func(
             array($DcHetzher, $this->argument('method')),
